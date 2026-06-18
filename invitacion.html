@@ -118,11 +118,14 @@
             height: 180px;
             left: 15px;
             top: 20px;
-            z-index: 1;
-            transition: transform 0.6s ease-in-out, opacity 0.5s ease;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(60px);
+            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.6s ease, z-index 0.1s ease;
             padding: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             border: 1px solid #f1ece1;
+            pointer-events: none;
         }
 
         /* Estado del sobre abierto */
@@ -132,8 +135,12 @@
         }
 
         .envelope.open .letter {
-            transform: translateY(-110px);
-            z-index: 5;
+            transform: translateY(-110px); /* Deslizamiento impecable hacia arriba */
+            opacity: 1; /* Aparece fluidamente */
+            z-index: 5; /* Queda al frente de todo */
+            pointer-events: auto;
+            /* Retraso para esperar a que la solapa se abra primero */
+            transition-delay: 0.4s;
         }
 
         /* Hojas cayendo con canvas */
@@ -168,24 +175,31 @@
         /* Sello de cera */
         .wax-seal {
             position: absolute;
-            top: 100px;
+            top: 96px;
             left: 135px;
             width: 50px;
             height: 50px;
             background: #C05C46;
             border-radius: 50%;
             z-index: 10;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2), inset 0 0 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25), inset 0 0 10px rgba(0,0,0,0.3);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: transform 0.3s ease;
-            border: 2px dashed rgba(255,255,255,0.1);
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            border: 2px dashed rgba(255,255,255,0.15);
         }
 
         .wax-seal:hover {
             transform: scale(1.1);
+        }
+
+        /* Desvanecimiento elegante del sello al abrir */
+        .envelope.open .wax-seal {
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+            pointer-events: none;
         }
 
         /* Pulsación romántica para el botón del sobre */
@@ -352,10 +366,10 @@
                                 </svg>
                             </div>
                             <h3 class="font-serif-elegant text-xl text-weddingDark mb-2">Ubicación</h3>
-                            <p class="text-sm text-weddingDark/80 font-sans mb-4">Cartago Province, Cartago, Costa Rica</p>
+                            <p class="text-sm text-weddingDark/80 font-sans mb-4">Plaza Los Ángeles, Cartago, Costa Rica</p>
                         </div>
                         <div class="border-t border-weddingChampagne pt-4">
-                            <a href="https://maps.google.com/?q=Cartago,Costa+Rica" target="_blank" class="inline-block bg-weddingOlive hover:bg-weddingOliveLight text-white px-5 py-2 rounded-full text-xs font-sans uppercase tracking-widest transition-all shadow-sm">
+                            <a href="https://maps.app.goo.gl/RMbGp3XKYP7nsEGf9" target="_blank" class="inline-block bg-weddingOlive hover:bg-weddingOliveLight text-white px-5 py-2 rounded-full text-xs font-sans uppercase tracking-widest transition-all shadow-sm">
                                 Abrir en Google Maps
                             </a>
                         </div>
@@ -413,11 +427,17 @@
                 <div class="relative max-w-3xl mx-auto rounded-2xl overflow-hidden group shadow-2xl">
                     <div id="carousel" class="carousel-container">
                         <!-- Foto 1 -->
-                        <div class="w-full shrink-0 aspect-[4/3] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=1200');"></div>
+                        <div class="w-full shrink-0 aspect-[4/3] bg-cover bg-center" style="background-image: url('images/1.jpeg');"></div>
                         <!-- Foto 2 -->
-                        <div class="w-full shrink-0 aspect-[4/3] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=1200');"></div>
+                        <div class="w-full shrink-0 aspect-[4/3] bg-cover bg-center" style="background-image: url('images/2.jpeg');"></div>
                         <!-- Foto 3 -->
-                        <div class="w-full shrink-0 aspect-[4/3] bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1507504038482-76210f54ce55?auto=format&fit=crop&q=80&w=1200');"></div>
+                        <div class="w-full shrink-0 aspect-[4/3] bg-cover bg-center" style="background-image: url('images/3.jpeg');"></div>
+                        <!-- Foto 4 -->
+                        <div class="w-full shrink-0 aspect-[4/3] bg-cover bg-center" style="background-image: url('images/4.jpeg');"></div>
+                        <!-- Foto 5 -->
+                        <div class="w-full shrink-0 aspect-[4/3] bg-cover bg-center" style="background-image: url('images/5.jpeg');"></div>
+                        <!-- Foto 6 -->|
+                        <div class="w-full shrink-0 aspect-[4/3] bg-cover bg-center" style="background-image: url('images/6.jpeg');"></div>
                     </div>
 
                     <!-- Botones de navegación -->
@@ -450,36 +470,6 @@
                 "El mejor regalo es compartir este momento con ustedes. Si desean hacernos un obsequio, preferimos una contribución en efectivo para nuestros futuros proyectos (Lluvia de Sobres)."
             </p>
 
-            <!-- Datos bancarios de ejemplo con copiado interactivo -->
-            <div class="max-w-md mx-auto bg-weddingChampagne/40 border border-weddingOlive/10 rounded-2xl p-6 text-left relative overflow-hidden shadow-inner">
-                <div class="flex justify-between items-center mb-4">
-                    <span class="text-[10px] uppercase tracking-wider text-weddingOlive font-bold">Transferencia Bancaria</span>
-                    <span class="text-[10px] px-2 py-0.5 rounded bg-weddingTerracotta/10 text-weddingTerracotta font-medium">SINPE móvil</span>
-                </div>
-                <div class="space-y-3 font-sans text-sm">
-                    <div>
-                        <p class="text-[10px] text-weddingDark/50 uppercase">Banco / Destino</p>
-                        <p class="font-semibold text-weddingDark">Banco Nacional (Costa Rica)</p>
-                    </div>
-                    <div>
-                        <p class="text-[10px] text-weddingDark/50 uppercase">A Nombre De</p>
-                        <p class="font-semibold text-weddingDark">Diego Monge / Yerlin Bonilla</p>
-                    </div>
-                    <div>
-                        <p class="text-[10px] text-weddingDark/50 uppercase">Cuenta IBAN / Número</p>
-                        <div class="flex items-center justify-between mt-1">
-                            <span id="iban-number" class="font-mono text-xs md:text-sm font-semibold tracking-tight text-weddingDark">CR05015180100200345678</span>
-                            <button onclick="copyToClipboard()" class="bg-weddingOlive hover:bg-weddingOliveLight text-white px-3 py-1 rounded text-xs transition-colors flex items-center gap-1 focus:outline-none">
-                                <span id="copy-text">Copiar</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Notificación flotante de copiado -->
-                <div id="copy-toast" class="absolute inset-0 bg-weddingOlive/95 backdrop-blur-sm flex items-center justify-center translate-y-full transition-transform duration-300">
-                    <p class="text-white font-sans text-sm font-medium tracking-wide">¡Número de Cuenta Copiado!</p>
-                </div>
-            </div>
         </section>
 
         <!-- SECCIÓN: CONFIRMACIÓN (RSVP) -->
@@ -541,7 +531,7 @@
 
     <!-- AUDIO ELEMENT (Instrumental piano romántico de fondo) -->
     <audio id="wedding-audio" loop preload="auto">
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <source src="audio/Elvis Presley.mp3" type="audio/mpeg">
     </audio>
 
     <script>
@@ -671,7 +661,7 @@
 
         // --- 5. CARRUSEL DE FOTOS SIMPLE ---
         let currentSlide = 0;
-        const totalSlides = 3;
+        const totalSlides = 6;
 
         function updateCarousel() {
             const carousel = document.getElementById('carousel');
@@ -730,8 +720,7 @@
             message += `\n¡Estamos muy emocionados de compartir este día tan especial con ustedes! 💕`;
 
             const encodedMessage = encodeURIComponent(message);
-            // Reemplazar con el número de WhatsApp de los novios
-            const phoneNumber = "50688888888"; // Reemplaza aquí con el número real de Costa Rica
+            const phoneNumber = "50664452782"; // Reemplaza aquí con el número real de Costa Rica
             
             window.open(`https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`, '_blank');
         }
